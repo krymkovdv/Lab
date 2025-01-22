@@ -1,3 +1,7 @@
+from typing import Optional, List
+
+
+
 BOOKS_DATABASE = [
     {
         "id": 1,
@@ -26,21 +30,20 @@ class Book:
 
 
 class Library:
-    def __init__(self, books=None):
+    def __init__(self, books: Optional[List[Book]]=None):
         self.books = books if books is not None else []
 
     def get_next_book_id(self):
         if not self.books:
             return 1
-        else:
-            return max(book.id_ for book in self.books) + 1
-
+        last_book = self.books[-1]
+        next_id = last_book.id_ + 1
+        return next_id
     def get_index_by_book_id(self,book_id):
         for index,book in enumerate(self.books):
             if book.id_ == book_id:
                 return index
-            else:
-                return ValueError("Книги с запрашиваемым id не существует")
+        raise ValueError("Книги с запрашиваемым id не существует")
 
 
 
